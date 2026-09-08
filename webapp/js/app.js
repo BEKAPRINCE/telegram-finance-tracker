@@ -1,18 +1,13 @@
 /* ═══════════════════════════════════════════════════════
-   App Module — Main entry point, initialization, events
+   App Module — Main entry point, initialization, events,
+   and Telegram Mini App Safe Area integration
    ═══════════════════════════════════════════════════════ */
 
 const App = {
   async init() {
     try {
-      // Initialize Telegram WebApp
-      if (window.Telegram?.WebApp) {
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-        tg.setHeaderColor('#0d1117');
-        tg.setBackgroundColor('#0d1117');
-      }
+      // ── Initialize Telegram WebApp SDK ──────────────────
+      this.initTelegram();
 
       // Initialize database defaults
       await DB.initDefaultCategories();
@@ -30,16 +25,73 @@ const App = {
       // Hide splash, show app
       setTimeout(() => {
         const splash = document.getElementById('splash-screen');
-        splash.classList.add('fade-out');
-        document.getElementById('screens').style.display = 'block';
-        document.getElementById('bottom-nav').style.display = 'flex';
-
-        setTimeout(() => splash.remove(), 500);
-      }, 800);
+        if (splash) {
+          splash.classList.add('fade-out');
+          document.getElementById('screens').style.display = 'block';
+          document.getElementById('bottom-nav').style.display = 'flex';
+          setTimeout(() => splash.remove(), 450);
+        }
+      }, 600);
 
     } catch (err) {
       console.error('App init error:', err);
       UI.showToast('Ошибка загрузки: ' + err.message, 'error');
+    }
+  },
+
+  initTelegram() {
+    if (!window.Telegram?.WebApp) return;
+    const tg = window.Telegram.WebApp;
+
+    tg.ready();
+    tg.expand();
+
+    if (tg.enableClosingConfirmation) {
+      tg.enableClosingConfirmation();
+    }
+
+    if (tg.setHeaderColor) tg.setHeaderColor('#0d1117');
+    if (tg.setBackgroundColor) tg.setBackgroundColor('#0d1117');
+
+    // ── Safe Area Inset Synchronization ─────────────────
+    const syncSafeArea = () => {
+      // Content safe area takes precedence over viewport safe area
+      const top = tg.contentSafeAreaInset?.top ?? tg.safeAreaInset?.top ?? 0;
+      const bottom = tg.contentSafeAreaInset?.bottom ?? tg.safeAreaInset?.bottom ?? 0;
+      const left = tg.contentSafeAreaInset?.left ?? tg.safeAreaInset?.left ?? 0;
+      const right = tg.contentSafeAreaInset?.right ?? tg.safeAreaInset?.right ?? 0;
+
+      const root = document.documentElement;
+      if (top > 0) root.style.setProperty('--tg-safe-top-js', `${top}px`);
+      if (bottom > 0) root.style.setProperty('--tg-safe-bottom-js', `${bottom}px`);
+      if (left > 0) root.style.setProperty('--tg-safe-left-js', `${left}px`);
+      if (right > 0) root.style.setProperty('--tg-safe-right-js', `${right}px`);
+    };
+
+    syncSafeArea();
+    tg.onEvent?.('viewportChanged', syncSafeArea);
+    tg.onEvent?.('safeAreaChanged', syncSafeArea);
+    tg.onEvent?.('contentSafeAreaChanged', syncSafeArea);
+
+    // ── Telegram Native BackButton ───────────────────────
+    if (tg.BackButton) {
+      tg.BackButton.onClick(() => {
+        if (UI.currentScreen !== 'dashboard') {
+          UI.navigateTo('dashboard');
+        } else {
+          tg.close();
+        }
+      });
+    }
+  },
+
+  updateTelegramBackButton(screen) {
+    if (!window.Telegram?.WebApp?.BackButton) return;
+    const bb = window.Telegram.WebApp.BackButton;
+    if (screen !== 'dashboard') {
+      bb.show();
+    } else {
+      bb.hide();
     }
   },
 
@@ -48,6 +100,7 @@ const App = {
     document.querySelectorAll('.nav-btn[data-nav]').forEach(btn => {
       btn.addEventListener('click', () => {
         UI.navigateTo(btn.dataset.nav);
+        this.updateTelegramBackButton(btn.dataset.nav);
       });
     });
 
@@ -55,19 +108,20 @@ const App = {
     document.querySelectorAll('[data-back]').forEach(btn => {
       btn.addEventListener('click', () => {
         UI.navigateTo('dashboard');
+        this.updateTelegramBackButton('dashboard');
       });
     });
 
     // ── Settings Button (Dashboard) ──────────────────────
     document.getElementById('btn-settings').addEventListener('click', () => {
       UI.navigateTo('settings');
+      this.updateTelegramBackButton('settings');
     });
 
     // ── View All Transactions ────────────────────────────
     document.getElementById('btn-view-all').addEventListener('click', async () => {
-      // Show all transactions in a modal-like view within dashboard
-      const allTx = await DB.getAllTransactions();
       UI.navigateTo('analytics');
+      this.updateTelegramBackButton('analytics');
     });
 
     // ── Transaction Type Toggle ──────────────────────────
@@ -139,6 +193,7 @@ const App = {
           await CurrencyManager.init();
           UI.selectedCurrency = CurrencyManager.getMainCurrency();
           UI.navigateTo('dashboard');
+          App.updateTelegramBackButton('dashboard');
         }},
       ]);
     });
@@ -160,6 +215,7 @@ const App = {
           UI.hideModal();
           UI.showToast('Данные очищены', 'success');
           UI.navigateTo('dashboard');
+          App.updateTelegramBackButton('dashboard');
         }},
       ]);
     });
@@ -170,17 +226,6 @@ const App = {
         UI.hideModal();
       }
     });
-
-    // ── Telegram BackButton ──────────────────────────────
-    if (window.Telegram?.WebApp?.BackButton) {
-      window.Telegram.WebApp.BackButton.onClick(() => {
-        if (UI.currentScreen !== 'dashboard') {
-          UI.navigateTo('dashboard');
-        } else {
-          window.Telegram.WebApp.close();
-        }
-      });
-    }
   }
 };
 

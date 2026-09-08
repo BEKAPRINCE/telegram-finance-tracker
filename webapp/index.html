@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="description" content="Telegram Mini App для отслеживания личных финансов">
   <title>Finance Tracker</title>
 
@@ -46,55 +46,71 @@
       <!-- ══════════ DASHBOARD ══════════ -->
       <section id="screen-dashboard" class="screen active" data-screen="dashboard">
         <header class="screen-header">
-          <h1 class="header-title">Finance Tracker</h1>
-          <button id="btn-settings" class="header-btn" aria-label="Настройки">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          </button>
+          <div class="header-brand">
+            <span class="header-logo-icon">💰</span>
+            <h1 class="header-title">Finance Tracker</h1>
+          </div>
+          <div class="header-actions">
+            <button id="btn-settings" class="header-btn" aria-label="Настройки">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+          </div>
         </header>
 
-        <!-- Balance Card -->
-        <div class="balance-card glass-card">
-          <p class="balance-label">Баланс за месяц</p>
-          <h2 id="balance-amount" class="balance-amount">0</h2>
-          <div class="balance-row">
-            <div class="balance-item income">
-              <span class="balance-icon">↑</span>
-              <div>
-                <p class="balance-item-label">Доходы</p>
-                <p id="income-amount" class="balance-item-value">0</p>
+        <!-- Adaptive Dashboard Grid -->
+        <div class="dashboard-grid">
+          
+          <!-- Left / Main Column: Balance & Stats -->
+          <div class="dashboard-main-col">
+            <!-- Balance Card -->
+            <div class="balance-card glass-card">
+              <p class="balance-label">Баланс за месяц</p>
+              <h2 id="balance-amount" class="balance-amount">0</h2>
+              <div class="balance-row">
+                <div class="balance-item income">
+                  <span class="balance-icon">↑</span>
+                  <div>
+                    <p class="balance-item-label">Доходы</p>
+                    <p id="income-amount" class="balance-item-value">0</p>
+                  </div>
+                </div>
+                <div class="balance-divider"></div>
+                <div class="balance-item expense">
+                  <span class="balance-icon">↓</span>
+                  <div>
+                    <p class="balance-item-label">Расходы</p>
+                    <p id="expense-amount" class="balance-item-value">0</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="balance-divider"></div>
-            <div class="balance-item expense">
-              <span class="balance-icon">↓</span>
-              <div>
-                <p class="balance-item-label">Расходы</p>
-                <p id="expense-amount" class="balance-item-value">0</p>
+
+            <!-- Recent Transactions -->
+            <div class="section-card glass-card">
+              <div class="section-header">
+                <h3 class="section-title">Последние операции</h3>
+                <button id="btn-view-all" class="section-link">Все →</button>
+              </div>
+              <div id="recent-transactions" class="transactions-list">
+                <p class="empty-state">Нет транзакций. Нажмите + чтобы добавить</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Quick Chart -->
-        <div class="section-card glass-card">
-          <div class="section-header">
-            <h3 class="section-title">Расходы по категориям</h3>
+          <!-- Right / Side Column: Analytics preview & breakdown -->
+          <div class="dashboard-side-col">
+            <!-- Quick Chart -->
+            <div class="section-card glass-card h-full">
+              <div class="section-header">
+                <h3 class="section-title">Расходы по категориям</h3>
+              </div>
+              <div class="chart-container-small">
+                <canvas id="dashboard-chart"></canvas>
+                <p id="dashboard-chart-empty" class="chart-empty" style="display:none;">Добавьте транзакции для отображения графика</p>
+              </div>
+            </div>
           </div>
-          <div class="chart-container-small">
-            <canvas id="dashboard-chart"></canvas>
-            <p id="dashboard-chart-empty" class="chart-empty" style="display:none;">Добавьте транзакции для отображения графика</p>
-          </div>
-        </div>
 
-        <!-- Recent Transactions -->
-        <div class="section-card glass-card">
-          <div class="section-header">
-            <h3 class="section-title">Последние операции</h3>
-            <button id="btn-view-all" class="section-link">Все →</button>
-          </div>
-          <div id="recent-transactions" class="transactions-list">
-            <p class="empty-state">Нет транзакций. Нажмите + чтобы добавить</p>
-          </div>
         </div>
       </section>
 
@@ -108,60 +124,73 @@
           <div style="width:40px"></div>
         </header>
 
-        <!-- Type Toggle -->
-        <div class="type-toggle">
-          <button id="type-expense" class="type-btn active" data-type="expense">Расход</button>
-          <button id="type-income" class="type-btn" data-type="income">Доход</button>
-          <div class="type-slider"></div>
-        </div>
+        <!-- Adaptive Add Grid -->
+        <div class="add-grid">
+          
+          <!-- Left Column: Type, Amount & Currency -->
+          <div class="add-col-left">
+            <!-- Type Toggle -->
+            <div class="type-toggle">
+              <button id="type-expense" class="type-btn active" data-type="expense">Расход</button>
+              <button id="type-income" class="type-btn" data-type="income">Доход</button>
+              <div class="type-slider"></div>
+            </div>
 
-        <!-- Amount Input -->
-        <div class="amount-input-container">
-          <div class="amount-display">
-            <span id="amount-currency" class="amount-currency">₸</span>
-            <input id="amount-input" class="amount-input" type="number" inputmode="decimal" placeholder="0" min="0" step="0.01">
-          </div>
-        </div>
+            <!-- Amount Input -->
+            <div class="amount-input-container">
+              <div class="amount-display">
+                <span id="amount-currency" class="amount-currency">₸</span>
+                <input id="amount-input" class="amount-input" type="number" inputmode="decimal" placeholder="0" min="0" step="0.01">
+              </div>
+            </div>
 
-        <!-- Category Grid -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">Категория</h3>
-          <div id="category-grid" class="category-grid">
-            <!-- Filled by JS -->
-          </div>
-        </div>
+            <!-- Currency Selector -->
+            <div class="section-card glass-card">
+              <h3 class="section-title">Валюта</h3>
+              <div id="currency-selector" class="currency-selector">
+                <!-- Filled by JS -->
+              </div>
+            </div>
 
-        <!-- Currency Selector -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">Валюта</h3>
-          <div id="currency-selector" class="currency-selector">
-            <!-- Filled by JS -->
+            <!-- Save Button (Desktop Left Col, Mobile Bottom) -->
+            <button id="btn-save-tx" class="btn-primary btn-save">
+              <span class="btn-text">Сохранить операцию</span>
+              <span class="btn-check" style="display:none;">✓</span>
+            </button>
           </div>
-        </div>
 
-        <!-- Date & Comment -->
-        <div class="section-card glass-card">
-          <div class="form-group">
-            <label class="form-label" for="tx-date">Дата</label>
-            <input id="tx-date" class="form-input" type="date">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="tx-comment">Комментарий</label>
-            <input id="tx-comment" class="form-input" type="text" placeholder="Необязательно" maxlength="100">
-          </div>
-        </div>
+          <!-- Right Column: Category & Details -->
+          <div class="add-col-right">
+            <!-- Category Grid -->
+            <div class="section-card glass-card">
+              <h3 class="section-title">Категория</h3>
+              <div id="category-grid" class="category-grid">
+                <!-- Filled by JS -->
+              </div>
+            </div>
 
-        <!-- Save Button -->
-        <button id="btn-save-tx" class="btn-primary btn-save">
-          <span class="btn-text">Сохранить</span>
-          <span class="btn-check" style="display:none;">✓</span>
-        </button>
+            <!-- Date & Comment -->
+            <div class="section-card glass-card">
+              <div class="form-group">
+                <label class="form-label" for="tx-date">Дата</label>
+                <input id="tx-date" class="form-input" type="date">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="tx-comment">Комментарий</label>
+                <input id="tx-comment" class="form-input" type="text" placeholder="Необязательно" maxlength="100">
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
 
       <!-- ══════════ ANALYTICS ══════════ -->
       <section id="screen-analytics" class="screen" data-screen="analytics">
         <header class="screen-header">
-          <h1 class="header-title">Аналитика</h1>
+          <div class="header-brand">
+            <h1 class="header-title">Аналитика</h1>
+          </div>
         </header>
 
         <!-- Period Selector -->
@@ -183,30 +212,33 @@
           </div>
         </div>
 
-        <!-- Trend Chart -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">Тренд расходов</h3>
-          <div class="chart-container">
-            <canvas id="trend-chart"></canvas>
+        <!-- Adaptive Analytics Grid -->
+        <div class="analytics-grid">
+          <!-- Trend Chart -->
+          <div class="section-card glass-card analytics-col">
+            <h3 class="section-title">Тренд расходов</h3>
+            <div class="chart-container">
+              <canvas id="trend-chart"></canvas>
+            </div>
           </div>
-        </div>
 
-        <!-- Category Breakdown -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">По категориям</h3>
-          <div class="chart-container-small">
-            <canvas id="category-chart"></canvas>
+          <!-- Category Breakdown -->
+          <div class="section-card glass-card analytics-col">
+            <h3 class="section-title">По категориям</h3>
+            <div class="chart-container-small">
+              <canvas id="category-chart"></canvas>
+            </div>
+            <div id="category-breakdown" class="category-breakdown">
+              <!-- Filled by JS -->
+            </div>
           </div>
-          <div id="category-breakdown" class="category-breakdown">
-            <!-- Filled by JS -->
-          </div>
-        </div>
 
-        <!-- Income vs Expense Bar Chart -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">Доходы vs Расходы</h3>
-          <div class="chart-container">
-            <canvas id="comparison-chart"></canvas>
+          <!-- Income vs Expense Bar Chart -->
+          <div class="section-card glass-card analytics-col-wide">
+            <h3 class="section-title">Доходы vs Расходы</h3>
+            <div class="chart-container">
+              <canvas id="comparison-chart"></canvas>
+            </div>
           </div>
         </div>
       </section>
@@ -214,13 +246,15 @@
       <!-- ══════════ BUDGETS ══════════ -->
       <section id="screen-budgets" class="screen" data-screen="budgets">
         <header class="screen-header">
-          <h1 class="header-title">Бюджеты</h1>
+          <div class="header-brand">
+            <h1 class="header-title">Бюджеты</h1>
+          </div>
           <button id="btn-add-budget" class="header-btn" aria-label="Добавить бюджет">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
         </header>
 
-        <div id="budgets-list" class="budgets-list">
+        <div id="budgets-list" class="budgets-list budgets-grid">
           <div class="empty-state">
             <p class="empty-icon">📋</p>
             <p>Нет бюджетов</p>
@@ -239,54 +273,63 @@
           <div style="width:40px"></div>
         </header>
 
-        <!-- Main Currency -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">Основная валюта</h3>
-          <div id="main-currency-selector" class="currency-selector">
-            <!-- Filled by JS -->
-          </div>
-        </div>
+        <!-- Adaptive Settings Grid -->
+        <div class="settings-grid">
+          
+          <div class="settings-col">
+            <!-- Main Currency -->
+            <div class="section-card glass-card">
+              <h3 class="section-title">Основная валюта</h3>
+              <div id="main-currency-selector" class="currency-selector">
+                <!-- Filled by JS -->
+              </div>
+            </div>
 
-        <!-- Categories Management -->
-        <div class="section-card glass-card">
-          <div class="section-header">
-            <h3 class="section-title">Категории</h3>
-            <button id="btn-add-category" class="section-link">+ Добавить</button>
+            <!-- Categories Management -->
+            <div class="section-card glass-card">
+              <div class="section-header">
+                <h3 class="section-title">Категории</h3>
+                <button id="btn-add-category" class="section-link">+ Добавить</button>
+              </div>
+              <div id="categories-manage-list" class="categories-manage-list">
+                <!-- Filled by JS -->
+              </div>
+            </div>
           </div>
-          <div id="categories-manage-list" class="categories-manage-list">
-            <!-- Filled by JS -->
-          </div>
-        </div>
 
-        <!-- Data Management -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">Данные</h3>
-          <div class="settings-actions">
-            <button id="btn-export-json" class="settings-btn">
-              <span class="settings-btn-icon">📦</span>
-              <span>Экспорт JSON (бэкап)</span>
-            </button>
-            <button id="btn-export-csv" class="settings-btn">
-              <span class="settings-btn-icon">📊</span>
-              <span>Экспорт CSV (Excel)</span>
-            </button>
-            <button id="btn-import" class="settings-btn">
-              <span class="settings-btn-icon">📥</span>
-              <span>Импорт данных</span>
-            </button>
-            <input id="import-file-input" type="file" accept=".json" style="display:none">
-            <button id="btn-clear-data" class="settings-btn danger">
-              <span class="settings-btn-icon">🗑️</span>
-              <span>Очистить все данные</span>
-            </button>
-          </div>
-        </div>
+          <div class="settings-col">
+            <!-- Data Management -->
+            <div class="section-card glass-card">
+              <h3 class="section-title">Данные</h3>
+              <div class="settings-actions">
+                <button id="btn-export-json" class="settings-btn">
+                  <span class="settings-btn-icon">📦</span>
+                  <span>Экспорт JSON (бэкап)</span>
+                </button>
+                <button id="btn-export-csv" class="settings-btn">
+                  <span class="settings-btn-icon">📊</span>
+                  <span>Экспорт CSV (Excel)</span>
+                </button>
+                <button id="btn-import" class="settings-btn">
+                  <span class="settings-btn-icon">📥</span>
+                  <span>Импорт данных</span>
+                </button>
+                <input id="import-file-input" type="file" accept=".json" style="display:none">
+                <button id="btn-clear-data" class="settings-btn danger">
+                  <span class="settings-btn-icon">🗑️</span>
+                  <span>Очистить все данные</span>
+                </button>
+              </div>
+            </div>
 
-        <!-- App Info -->
-        <div class="section-card glass-card">
-          <h3 class="section-title">О приложении</h3>
-          <p class="app-info">Finance Tracker v1.0</p>
-          <p class="app-info hint">Все данные хранятся локально на вашем устройстве</p>
+            <!-- App Info -->
+            <div class="section-card glass-card">
+              <h3 class="section-title">О приложении</h3>
+              <p class="app-info">Finance Tracker v1.0</p>
+              <p class="app-info hint">Все данные хранятся локально на вашем устройстве</p>
+            </div>
+          </div>
+
         </div>
       </section>
 

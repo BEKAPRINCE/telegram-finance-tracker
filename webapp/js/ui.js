@@ -42,6 +42,9 @@ const UI = {
     });
 
     this.currentScreen = screen;
+    if (window.App?.updateTelegramBackButton) {
+      window.App.updateTelegramBackButton(screen);
+    }
 
     // Refresh screen content
     this.refreshScreen(screen);
