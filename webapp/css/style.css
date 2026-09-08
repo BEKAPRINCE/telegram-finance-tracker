@@ -1244,18 +1244,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: var(--text-hint);
 }
 
-/* ── Bottom Navigation (Safe Area + Floating Dock) ───── */
+/* ── Bottom Navigation (Safe Area + Anchored Glass Dock) ─ */
 .bottom-nav {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: 100%;
   height: calc(var(--nav-height) + max(8px, var(--safe-bottom)));
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   background: rgba(13, 17, 23, 0.94);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
@@ -1264,7 +1263,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding-left: max(16px, var(--safe-left));
   padding-right: max(16px, var(--safe-right));
   z-index: 100;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bottom-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
 }
 
 .nav-btn {
@@ -1340,21 +1347,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @keyframes fab-pulse {
   0%, 100% { box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45); }
   50% { box-shadow: 0 8px 30px rgba(102, 126, 234, 0.7); }
-}
-
-/* Floating Navigation Dock on Tablet & Desktop */
-@media (min-width: 768px) {
-  .bottom-nav {
-    max-width: 520px;
-    bottom: 24px;
-    height: var(--nav-height);
-    border-radius: 36px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(88, 166, 255, 0.08);
-    padding-bottom: 0;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
 }
 
 /* ── Modal (Safe Area + Centered Responsive Dialog) ──── */
